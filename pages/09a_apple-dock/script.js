@@ -1,14 +1,69 @@
+import gsap from "gsap";
+
 // Get DOM elements
 const dock = document.querySelector(".dock"); // The dock container at the bottom
 const icons = document.querySelectorAll(".icon"); // Individual icons inside the dock
 const trigger = document.querySelector(".dock-trigger"); // Hover trigger area above the dock
 
 // State variables to control hover and animation logic
-let isDockVisible = false;        // Is the dock currently visible?
-let isDockHovered = false;        // Is the user's mouse inside the dock?
-let isTriggerHovered = false;     // Is the user hovering the trigger area?
-let isReadyForHover = false;      // Should proximity scaling be active?
-let hasDockEntered = false;       // Tracks if the dock has been hovered at least once
+let isDockVisible = false; // Is the dock currently visible?
+let isDockHovered = false; // Is the user's mouse inside the dock?
+let isTriggerHovered = false; // Is the user hovering the trigger area?
+let isReadyForHover = false; // Should proximity scaling be active?
+let hasDockEntered = false; // Tracks if the dock has been hovered at least once
+
+const showDock = () => {
+  gsap.fromTo(
+    icons,
+    {
+      scale: 0,
+      opacity: 0,
+      duration: 0.2,
+      ease: "expo.inOut",
+      y: 90,
+    },
+    {
+      scale: 1,
+      opacity: 1,
+      duration: 0.2,
+      y: -150,
+
+      ease: "expo.out",
+    }
+  );
+  gsap.fromTo(
+    dock,
+    {
+      scale: 0,
+      duration: 0.2,
+      opacity: 0,
+      y: 90,
+    },
+    {
+      scale: 1,
+      duration: 0.2,
+      opacity: 1,
+      y: -150,
+    }
+  );
+
+  hasDockEntered = true;
+};
+
+const hideDock = () => {
+  gsap.to(icons, {
+    y: -101,
+    ease: "expo.out",
+    duration: 0.8,
+  });
+  gsap.to(dock, {
+    y: 10,
+    ease: "expo.out",
+    duration: 0.8,
+  });
+
+  hasDockEntered = false;
+};
 
 // Mouse enters the trigger area (above the dock)
 trigger.addEventListener("mouseenter", () => {
