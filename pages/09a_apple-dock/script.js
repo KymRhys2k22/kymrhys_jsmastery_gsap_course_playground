@@ -12,6 +12,8 @@ let isTriggerHovered = false; // Is the user hovering the trigger area?
 let isReadyForHover = false; // Should proximity scaling be active?
 let hasDockEntered = false; // Tracks if the dock has been hovered at least once
 
+gsap.registerPlugin(useGsap);
+
 const showDock = () => {
   gsap.fromTo(
     icons,
